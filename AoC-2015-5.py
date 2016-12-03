@@ -1,3 +1,12 @@
+#!/usr/bin/env python
+
+"""Solution for the Advent of Code challenge 2015, day 5 part 1.
+
+Straightforward regex challenge."""
+
+__author__ = "Serge Beaumont"
+__date__ = "December 2016"
+
 DATA = """rthkunfaakmwmush
 qxlnvjguikqcyfzt
 sleaoasjspnjctqt
@@ -1007,7 +1016,6 @@ wrongCombosPattern = re.compile('ab|cd|pq|xy')
 
 nice = 0
 for s in DATA.split():
-    #print(s, len(rule1.findall(s)), rule2.search(s), not rule3.search(s))
     numberOfVowels = len(vowelPattern.findall(s))
     if (numberOfVowels >= 3) and doublesPattern.search(s) and not wrongCombosPattern.search(s):
         nice += 1

@@ -1,4 +1,11 @@
-FILE_NAME = "santa2015-8-data.txt"
+#!/usr/bin/env python
+
+"""Solution for the Advent of Code challenge 2015, day 8 part 1."""
+
+__author__ = "Serge Beaumont"
+__date__ = "December 2016"
+
+FILE_NAME = "AoC-2015-8-data.txt"
 
 import ast
 

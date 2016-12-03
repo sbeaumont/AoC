@@ -1,3 +1,19 @@
+#!/usr/bin/env python
+
+"""Solution for the Advent of Code challenge 2015, day 7 part 1.
+
+Strategy:
+
+1. Put all commands in a dict keyed by output
+2. Choose the final output
+3. Recurse through the dict
+3.1. If it's a string, resolve it
+3.2. If it's a number, return with the value
+"""
+
+__author__ = "Serge Beaumont"
+__date__ = "December 2016"
+
 DATA = """NOT dq -> dr
 kg OR kf -> kh
 ep OR eo -> eq
@@ -347,16 +363,8 @@ y RSHIFT 2 -> g
 NOT x -> h
 NOT y -> i"""
 
-
-# Put all commands in a dict keyed by output
-# choose the final output
-# recurse through the dict
-## if it's a string, resolve it
-## if it's a number, return with the value
-
-from pprint import pprint
-
 def resolve(output):
+    """Recursively resolve the input definition."""
     # Is it a number? Then just return the int version of it.
     if output.isnumeric():
         return int(output)
@@ -392,7 +400,7 @@ def resolve(output):
                 elif operator == 'RSHIFT':
                     outputs[output] = first >> second
         else:
-            # It's a unary operator! Extra if to protect against broken data.
+            # It's a unary operator! Extra if to protect against broken data (with this set of data it's always NOT at this point).
             if command[0] == 'NOT':
                 outputs[output] = ~int(resolve(command[1])) % (1<<16)
     else:
@@ -411,5 +419,3 @@ for line in DATA.split('\n'):
     outputs[output] = command[0].strip()
 
 print("a is", resolve('a'))
-
-#pprint(outputs)

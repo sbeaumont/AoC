@@ -1,3 +1,10 @@
+#!/usr/bin/env python
+
+"""Solution for the Advent of Code challenge 2015, day 10 parts 1 and 2."""
+
+__author__ = "Serge Beaumont"
+__date__ = "December 2016"
+
 SEED = '1113222113'
 ITERATIONS = 50
 

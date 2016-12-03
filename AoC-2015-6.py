@@ -1,3 +1,12 @@
+#!/usr/bin/env python
+
+"""Solution for the Advent of Code challenge 2015, day 6 part 1 and 2.
+
+Using numpy to handle a large grid."""
+
+__author__ = "Serge Beaumont"
+__date__ = "December 2016"
+
 DATA = """turn off 660,55 through 986,197
 turn off 341,304 through 638,850
 turn off 199,133 through 461,193
@@ -299,13 +308,13 @@ toggle 424,675 through 740,862
 toggle 580,592 through 671,900
 toggle 296,687 through 906,775"""
 
-DATA2 = """toggle 0,0 through 999,999"""
-
 import numpy
 
+# Initialize
 grid = numpy.zeros((1000,1000), dtype=int)
 
 def processCommand(command, x, y):
+    """Change the light at coordinate based on command given."""
     if command[0] == 'toggle':
         grid[x,y] += 2
     elif command[1] == 'on':
@@ -314,14 +323,16 @@ def processCommand(command, x, y):
         if grid[x,y] > 0:
             grid[x,y] -= 1
 
+# Process
 for line in DATA.split('\n'):
-    print(line)
+    # Parse command and coordinates
     command = line.split(' ')
     coord1 = [int(s) for s in command[-3].split(',')]
     coord2 = [int(s) for s in command[-1].split(',')]
 
+    # Perform the command on all coordinates in the box defined by the coordinates
     for x in range(coord1[0], coord2[0] + 1):
         for y in range(coord1[1], coord2[1] + 1):
             processCommand(command, x, y)
 
-    print("The grid has", numpy.sum(grid), "brightness.")
+print("The grid has", numpy.sum(grid), "brightness.")

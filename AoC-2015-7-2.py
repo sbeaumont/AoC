@@ -1,3 +1,12 @@
+#!/usr/bin/env python
+
+"""Solution for the Advent of Code challenge 2015, day 7 part 2.
+
+Same as day 1, but just do it twice. Before running second time initialize b with value from a."""
+
+__author__ = "Serge Beaumont"
+__date__ = "December 2016"
+
 DATA = """NOT dq -> dr
 kg OR kf -> kh
 ep OR eo -> eq
@@ -417,5 +426,3 @@ a = resolve('a')
 outputs = load_data()
 outputs['b'] = a
 print("a is", resolve('a'))
-
-#pprint(outputs)

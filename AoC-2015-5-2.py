@@ -1,3 +1,12 @@
+#!/usr/bin/env python
+
+"""Solution for the Advent of Code challenge 2015, day 5 part 2.
+
+Straightforward regex challenge."""
+
+__author__ = "Serge Beaumont"
+__date__ = "December 2016"
+
 DATA = """rthkunfaakmwmush
 qxlnvjguikqcyfzt
 sleaoasjspnjctqt
@@ -1003,8 +1012,6 @@ import re
 
 twoDoublesPattern = re.compile('(?P<two>[a-z]{2}).*(?P=two)')
 xyxPattern = re.compile('(?P<c>[a-z])[a-z](?P=c)')
-
-print("Parsing", len(DATA.split()), "lines.")
 
 nice = 0
 for s in DATA.split():

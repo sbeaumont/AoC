@@ -1,3 +1,12 @@
+#!/usr/bin/env python
+
+"""Solution for the Advent of Code challenge 2015, day 2 part 2.
+
+Parse the lengths, calculate perimeters and length of ribbon."""
+
+__author__ = "Serge Beaumont"
+__date__ = "December 2016"
+
 DATA = """29x13x26
 11x11x14
 27x2x5
@@ -1001,22 +1010,22 @@ DATA = """29x13x26
 
 total = 0
 for line in DATA.split():
+    # Parse
     l, w, h = line.split('x')
     l = int(l)
     w = int(w)
     h = int(h)
 
+    # Perimeters
     perimeter1 = 2*(l+w)
     perimeter2 = 2*(w+h)
     perimeter3 = 2*(h+l)
 
     smallestPerimeter = min(perimeter1, perimeter2, perimeter3)
 
+    # Length
     volume = l*w*h
-
     lengthNeeded = smallestPerimeter + volume
-
-    print(line, "---", smallestPerimeter,'+',volume,'=',lengthNeeded)
     total += lengthNeeded
 
 print("Total length needed: ", total)
