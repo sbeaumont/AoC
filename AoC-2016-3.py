@@ -8,7 +8,7 @@ __author__ = "Serge Beaumont"
 __date__ = "December 2016"
 
 # Load
-with open("santa2016-3-data.txt", 'r') as content_file:
+with open("AoC-2016-3-data.txt", 'r') as content_file:
     content = content_file.read()
 
 # Process
