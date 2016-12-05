@@ -23,12 +23,12 @@ for line in content.split('\n'):
     nodashes = re.sub('[-]', '', line)
     letters, id, checksum = re.search(pattern, nodashes).groups()
 
-    # Count of unique letters
+    # Count of unique letters into dict {'5': ['a', 'b'], '4': ['x'], ...
     letterCount = {}
     for c in set(letters):
         letterCount.setdefault(letters.count(c), []).append(c)
 
-    # Generate full checksum key: reverse count, then alphabetical
+    # Generate full checksum: reverse count (dict key), then alphabetical (dict value)
     fullkey = []
     for count in sorted(letterCount, reverse=True):
         fullkey.extend(sorted(letterCount[count]))
@@ -37,7 +37,7 @@ for line in content.split('\n'):
     # Compare
     if fullkeyString[:5] == checksum:
         idtotal += int(id)
-        # Since we're here anyway, let's get ready for part 2
+        # Since we're here anyway, let's get ready for part 2: grab the name part, preserving spaces
         realrooms[id] = re.sub('[-]', ' ', re.search('[a-z\-]+', line).group(0)).split()
 
 # Answer to part 1
@@ -46,7 +46,7 @@ print("Sum of Sector IDs:", idtotal)
 # Part 2: look for "North Pole Objects"
 
 for id, encryptedWords in realrooms.items():
-    # Create decoder based on an idea found here: https://stackoverflow.com/questions/3269686/short-rot13-function
+    # Create decoder based on an idea found here: https://stackoverflow.com/questions/3269686/short-rot13-function (Answer of Artur Gaspar)
     decoder = {}
     for c in (65, 97):
         for i in range(26):
