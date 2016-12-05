@@ -11,32 +11,36 @@ import hashlib, random
 
 def hackDoor(doorID):
     print("Hacking Door ID '{0}'".format(doorID))
+
+    # Initialize
     number = 0
     digitsFound = 0
     answer = list('________')
+
     while digitsFound < 8:
         # Generate hex digest
         hashString = doorID + str(number)
         md = hashlib.md5(bytes(hashString, 'utf-8'))
         hexdigest = str(md.hexdigest())
 
-        # Check
-        if hexdigest[0:5] == '00000':
-            if hexdigest[5].isnumeric():
-                position = int(hexdigest[5])
-                if (position < 8) and (answer[position] == '_'):
-                    answer[position] = str(hexdigest[6])
-                    digitsFound += 1
-                    print("".join(answer), random.choice(('*Beep*', '*Boop*', '*Bidibidi*', '*Brrt*')))
+        if hexdigest[0:5] == '00000' and hexdigest[5].isnumeric():
+            # If the 6th character is a number <= 8, and we have not previously found a character at this location.
+            position = int(hexdigest[5])
+            if (position < 8) and (answer[position] == '_'):
+                answer[position] = str(hexdigest[6])
+                digitsFound += 1
+                # Dramatic tension
+                print("".join(answer), random.choice(('*Beep*', '*Boop*', '*Bidibidi*', '*Brrt*')))
 
         number += 1
     return "".join(answer)
 
-# Test with example
-# print("Answer:", hackDoor('abc'), "expecting 05ace8e3")
+if __name__ == "__main__":
+    import time
 
-import time
+    # Test with example
+    # print("Answer:", hackDoor('abc'), "expecting 05ace8e3")
 
-start_time = time.clock()
-
-print("Answer:", hackDoor('wtnhxymk'), "in", time.clock() - start_time, "seconds.")
+    doorID = 'wtnhxymk'
+    start_time = time.clock()
+    print("\nThe code to door {0} is {1} (in {2} seconds).".format(doorID, hackDoor(doorID), time.clock() - start_time))
