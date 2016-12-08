@@ -18,8 +18,7 @@ grid = np.zeros((6,50), dtype=int)
 for line in lines:
     if line[:4] == 'rect':
         c, r = [int(s) for s in line.split()[1].split('x')]
-        rect = np.ones((r, c), dtype=int)
-        grid[0:r,0:c] = rect
+        grid[0:r,0:c] = np.ones((r, c), dtype=int)
     elif line[:10] == 'rotate row':
         r, by = [int(s) for s in line.split('=')[1].split('by')]
         grid[r,:] = np.roll(grid[r,:], by)
@@ -27,6 +26,6 @@ for line in lines:
         c, by = [int(s) for s in line.split('=')[1].split('by')]
         grid[:,c] = np.roll(grid[:,c], by)
 
-print(grid)
-
 print("The number of switched on lights is:", np.sum(grid))
+
+print(grid)
