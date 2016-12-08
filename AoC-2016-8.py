@@ -8,6 +8,7 @@ __author__ = "Serge Beaumont"
 __date__ = "December 2016"
 
 import numpy as np
+import re
 
 # Load
 with open("AoC-2016-8-data.txt", 'r') as content_file:
@@ -26,6 +27,9 @@ for line in lines:
         c, by = [int(s) for s in line.split('=')[1].split('by')]
         grid[:,c] = np.roll(grid[:,c], by)
 
-print("The number of switched on lights is:", np.sum(grid))
+print("The number of switched on lights is: {0}.\n".format(np.sum(grid)))
 
-print(grid)
+for row in grid:
+    line = re.sub(r'[\[ \n\]]', '', str(row))
+    line = re.sub('0', ' ', line)
+    print(line)
