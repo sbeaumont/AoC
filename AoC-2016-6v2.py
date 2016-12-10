@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-"""Solution for the Advent of Code challenge 2016, day 5 part 1.
+"""Solution for the Advent of Code challenge 2016, day 6.
 
 Based on Jeroen's suggestion to use Counter."""
 
@@ -10,10 +10,8 @@ __date__ = "December 2016"
 from collections import Counter
 
 # Load
-lines = []
 with open("AoC-2016-6-data.txt", 'r') as content_file:
-    for line in content_file:
-        lines.append(list(line.strip('\n')))
+    lines = [line.strip() for line in content_file]
 
 answer = ''
 part2answer = ''

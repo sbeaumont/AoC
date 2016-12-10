@@ -11,14 +11,14 @@ import re, pprint
 
 # Load
 with open("AoC-2016-4-data.txt", 'r') as content_file:
-    content = content_file.read()
+    content = [line.strip() for line in content_file]
 
 pattern = re.compile(r'([a-z]+)(\d+)\[([a-z]{5})\]')
 
 idtotal = 0
 realrooms = {}
 
-for line in content.split('\n'):
+for line in content:
     # Parse line into its component parts
     nodashes = re.sub('[-]', '', line)
     letters, id, checksum = re.search(pattern, nodashes).groups()
@@ -44,7 +44,6 @@ for line in content.split('\n'):
 print("Sum of Sector IDs:", idtotal)
 
 # Part 2: look for "North Pole Objects"
-
 for id, encryptedWords in realrooms.items():
     # Create decoder based on an idea found here: https://stackoverflow.com/questions/3269686/short-rot13-function (Answer of Artur Gaspar)
     decoder = {}

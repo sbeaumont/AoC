@@ -319,9 +319,11 @@ def processCommand(command, x, y):
         grid[x,y] += 2
     elif command[1] == 'on':
         grid[x,y] += 1
-    else:
+    elif command[1] == 'off':
         if grid[x,y] > 0:
             grid[x,y] -= 1
+    else:
+        print("Unknown command:", command)
 
 # Process
 for line in DATA.split('\n'):
