@@ -26,7 +26,6 @@ class Bot:
 
     def receiveChip(self, value):
         self.chips.append(value)
-        #print("I am {0:7} and just received chip {1:3}. I now have {2}".format(self.name, value, sorted(self.chips)))
         if len(self.chips) >= 2:
             if sorted(self.chips) == [17, 61]:
                 # Answer to part 1.
@@ -65,4 +64,5 @@ outputs = []
 for i in range(3):
     outputs.extend(bots['output ' + str(i)].chips)
 
-print("\nThe multiplied value of outputs 0-2 is:", functools.reduce(operator.mul, outputs, 1))
+print("The outputs are:", outputs)
+print("The multiplied value of outputs 0-2 is:", functools.reduce(operator.mul, outputs, 1))
