@@ -61,10 +61,10 @@ def lowerHop(x, y, lowestHops, nextNode):
 
 def shortestPath(location, pathLength = 0):
     x, y = location
+    maze[x, y]['shortest'] = True
     if maze[x, y]['hops'] == 0:
         return pathLength
     else:
-        maze[x, y]['shortest'] = True
         nextNode = location
         lowestHops = maze[x,y]['hops']
         lowestHops, nextNode = lowerHop(x + 1, y, lowestHops, nextNode)
@@ -82,12 +82,12 @@ def printMaze():
         for item in line:
             if item['wall']:
                 result.append('#')
-            elif item['shortest']:
-                result.append('X')
             elif item['hops'] <= 50:
-                result.append('@')
-            elif item['visited']:
+                result.append(str(item['hops'])[0])
+            elif item['shortest']:
                 result.append('O')
+            elif item['visited']:
+                result.append('x')
             else:
                 result.append('.')
         print("".join(result), i)
@@ -112,3 +112,4 @@ if __name__ == '__main__':
             atMost50Hops += 1
 
     print ("Of {0} total nodes, {1} are reachable in at most 50 hops:".format(nodesVisited, atMost50Hops))
+    print("(10, 9)=", maze[10, 9]['hops'])
