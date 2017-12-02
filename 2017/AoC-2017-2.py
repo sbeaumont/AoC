@@ -1,3 +1,11 @@
+#!/usr/bin/env python3
+
+"""Solution for Advent of Code challenge 2017"""
+
+__author__ = "Serge Beaumont"
+__date__ = "December 2017"
+
+
 from aoctools import *
 import math
 
