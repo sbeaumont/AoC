@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
-"""Solution for Advent of Code challenge 2017"""
+"""Solution for Advent of Code challenge 2017
+
+[Inverse Captcha](http://adventofcode.com/2017/day/1)"""
 
 __author__ = "Serge Beaumont"
 __date__ = "December 2017"

@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
-"""Solution for Advent of Code challenge 2017"""
+"""Solution for Advent of Code challenge 2017
+
+[Corruption Checksum](http://adventofcode.com/2017/day/2)"""
 
 __author__ = "Serge Beaumont"
 __date__ = "December 2017"

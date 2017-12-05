@@ -3,6 +3,8 @@
 """
 Solution for Advent of Code challenge 2017
 
+[Spiral Memory](http://adventofcode.com/2017/day/3)
+
     Finds the first position that is higher, and its "loop number". This is the shortest
     manhattan distance of that loop, which corresponds with the midpoints of the edges
     in line with the center position. The rest of the manhattan distance is the minimum
