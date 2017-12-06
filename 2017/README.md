@@ -8,3 +8,5 @@ Solutions in Python for Advent of Code 2017
 * [Day 3: Spiral Memory](http://adventofcode.com/2017/day/3)
 * [Day 4: High-Entropy Passphrases](http://adventofcode.com/2017/day/4)
 * [Day 5: A Maze of Twisty Trampolines, All Alike](http://adventofcode.com/2017/day/5)
+* [Day 6: Memory Reallocation](http://adventofcode.com/2017/day/6)
+
