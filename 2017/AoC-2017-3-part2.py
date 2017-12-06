@@ -10,6 +10,7 @@ import itertools
 
 PUZZLE_INPUT = 312051
 
+# cute way to calculate all permutations of (x, y) deltas
 neighbour_deltas = [d for d in itertools.product([-1, 0, 1], [-1, 0, 1]) if d != (0, 0)]
 direction_vectors = ((1, 0), (0, 1), (-1, 0), (0, -1))
 
@@ -19,6 +20,7 @@ def spiral_memory(max_value):
     visited_coordinates = dict()
     visited_coordinates[(0, 0)] = 1
     direction = 0
+    # edge_length, edge_pos and make_longer are all to spiral outwards, one step at a time.
     edge_length = 1
     edge_pos = 0
     make_longer = False
@@ -31,6 +33,7 @@ def spiral_memory(max_value):
         if edge_pos == edge_length:
             direction = (direction + 1) % 4
             edge_pos = 0
+            # this make_longer bool flip is to use a length twice: 1, 1, 2, 2, 3, 3...
             if make_longer:
                 edge_length += 1
             make_longer = not make_longer
