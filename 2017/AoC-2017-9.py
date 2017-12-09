@@ -1,10 +1,8 @@
-PUZZLE_INPUT_FILE_NAME = "AoC-2017-9-input.txt"
-# States
-#   in garbage
-#   skipping
-#   level
 
-# 17645h
+
+
+PUZZLE_INPUT_FILE_NAME = "AoC-2017-9-input.txt"
+
 
 level = 0
 in_garbage = False

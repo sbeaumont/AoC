@@ -2,7 +2,9 @@
 
 """Solution for Advent of Code challenge 2017
 
-[Recursive Circus](http://adventofcode.com/2017/day/7)"""
+[---](http://adventofcode.com/2017/day/9)
+
+Seriously crappy solution. Do not take seriously."""
 
 
 import re
