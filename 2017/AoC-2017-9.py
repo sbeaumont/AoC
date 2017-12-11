@@ -1,4 +1,8 @@
+#!/usr/bin/env python3
 
+"""Solution for Advent of Code challenge 2017
+
+[---](http://adventofcode.com/2017/day/9)"""
 
 
 PUZZLE_INPUT_FILE_NAME = "AoC-2017-9-input.txt"
