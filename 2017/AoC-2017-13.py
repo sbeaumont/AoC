@@ -4,32 +4,33 @@ PUZZLE_INPUT_FILE_NAME = "AoC-2017-13-input.txt"
 with open(PUZZLE_INPUT_FILE_NAME) as puzzle_input_file:
     layers = {int(line.split(":")[0]): int(line.split(":")[1]) for line in puzzle_input_file.readlines()}
 
-print(layers)
 
-
-def run_firewall(delay):
+def run_firewall(delay, firewall):
     severity = 0
-    for picosecs in range(delay, 93+delay):
+    for picosecs in range(delay, 100 + delay):
         layer = picosecs - delay
-        if layers.has_key(layer):
-            loop_pos = picosecs % (layers[layer] * 2 - 2)
-            pos = layers[layer] - abs(layers[layer] - loop_pos)
+        if layer in firewall:
+            loop_pos = picosecs % (firewall[layer] * 2 - 2)
+            pos = firewall[layer] - abs(firewall[layer] - loop_pos)
             if not pos:
-                severity += picosecs * layers[layer]
-            #print(picosecs, layers[picosecs], loop_pos, pos)
-
-    #print(delay, severity)
+                severity += layer * firewall[layer]
     return severity
 
-print("Part 1: Severity is {}".format(run_firewall(0)))
 
-delay = 0
-severity = 1
-while severity:
-    severity = run_firewall(delay)
-    print("Delay {} leads to severity {}".format(delay, severity))
-    delay += 1
+test_firewall = {0: 3, 1: 2, 4: 4, 6: 4}
+print("Test firewall has severity {}".format(run_firewall(0, test_firewall)))
 
-print("Delay {} leads to severity {}".format(delay - 1, severity))
 
-# not delay: 54, 53
+print("Part 1: Severity is {}".format(run_firewall(0, layers)))
+
+wait = 0
+sev = 1
+while sev:
+    sev = run_firewall(wait, layers)
+    if not sev or wait % 50000 == 0:
+        print("Part 2: Delay {} leads to severity {}".format(wait, sev))
+    wait += 1
+
+
+# not delay: 54, 53, 259572 too low
+
