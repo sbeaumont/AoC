@@ -42,7 +42,7 @@ def full_knot_hash(sequence):
     skip_size = 0
     s = range(STRING_LENGTH)
     for i in range(64):
-        s, position, skip_size = knot_hash(s, sequence, position, skip_size)
+        s, position, skip_size = knot_hash(s, sequence + PART_TWO_END_SEQUENCE, position, skip_size)
     dense_hash = [reduce(lambda x, y: x ^ y, s[r*16:r*16+16]) for r in range(16)]
     return "".join(["{:02x}".format(n) for n in dense_hash])
 
@@ -65,7 +65,7 @@ if __name__ == '__main__':
     print("Part 1: The first two numbers are {} and {}, their product is {}.".format(st[0], st[1], st[0] * st[1]))
 
     # Part 2
-    seq = [ord(c)for c in PUZZLE_INPUT] + PART_TWO_END_SEQUENCE
+    seq = [ord(c)for c in PUZZLE_INPUT]
     solution = full_knot_hash(seq)
 
     print("\nPart 2: {}".format(solution))
