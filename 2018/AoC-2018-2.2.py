@@ -8,6 +8,8 @@ __date__ = "December 2018"
 
 def get_levenshtein_distance(word1, word2):
     """
+    This algorithm is somewhat overkill since it can handle unequal length strings.
+
     Copied from https://medium.com/@yash_agarwal2/soundex-and-levenshtein-distance-in-python-8b4b56542e9e
 
     Also see https://en.wikipedia.org/wiki/Levenshtein_distance
@@ -40,7 +42,14 @@ def get_levenshtein_distance(word1, word2):
     return matrix[len(word1)][len(word2)]
 
 
-with open("AoC-2018-input-2.txt") as infile:
+def hamming_distance(word1, word2):
+    """"
+    ...And duh, for equal length strings it's so simple.
+    See https://en.wikipedia.org/wiki/Hamming_distance"""
+    return sum([1 for c1, c2 in zip(word1, word2) if c1 != c2])
+
+
+with open("AoC-2018-2-input.txt") as infile:
     box_ids = sorted([line.strip() for line in infile.readlines()])
 
 for i in range(len(box_ids)):
@@ -49,6 +58,17 @@ for i in range(len(box_ids)):
         print("{} and".format(box_ids[i]))
         print(box_ids[i+1])
         print("\nThe common characters are:")
-        print (''.join([c1 for c1, c2 in zip(box_ids[i], box_ids[i+1]) if c1 == c2]))
+        print(''.join([c1 for c1, c2 in zip(box_ids[i], box_ids[i+1]) if c1 == c2]))
+        break
+
+print("")
+
+for i in range(len(box_ids)):
+    if hamming_distance(box_ids[i], box_ids[i+1]) == 1:
+        print("Hamming distance is 1 between:")
+        print("{} and".format(box_ids[i]))
+        print(box_ids[i+1])
+        print("\nThe common characters are:")
+        print(''.join([c1 for c1, c2 in zip(box_ids[i], box_ids[i+1]) if c1 == c2]))
         break
 
