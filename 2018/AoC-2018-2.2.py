@@ -10,7 +10,8 @@ def get_levenshtein_distance(word1, word2):
     """
     Copied from https://medium.com/@yash_agarwal2/soundex-and-levenshtein-distance-in-python-8b4b56542e9e
 
-    Alse see https://en.wikipedia.org/wiki/Levenshtein_distance
+    Also see https://en.wikipedia.org/wiki/Levenshtein_distance
+    https://www.python-course.eu/levenshtein_distance.php
     """
     word2 = word2.lower()
     word1 = word1.lower()
