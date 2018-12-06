@@ -1,4 +1,11 @@
-from AoC201710 import full_knot_hash
+#!/usr/bin/env python3
+
+"""Solution for Advent of Code challenge 2017 - Day 14"""
+
+__author__ = "Serge Beaumont"
+__date__ = "December 2017"
+
+from knothash import full_knot_hash
 
 PUZZLE_INPUT = 'jxqlasbh' # 8080 too low
 TEST_INPUT = 'flqrgnkx'
@@ -22,6 +29,7 @@ def count_used(grid):
 def print_grid(grid):
     for line in grid:
         print(line)
+
 
 print("Test input has {} used sectors, should have 8108.".format(count_used(defrag(TEST_INPUT))))
 
