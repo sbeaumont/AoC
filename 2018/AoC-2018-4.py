@@ -1,8 +1,14 @@
 #!/usr/bin/env python3
 
-"""Solution for Advent of Code challenge 2018 - Day 4 Part 1
+"""Solution for Advent of Code challenge 2018 - Day 4
 
-Totally YOLO edition."""
+Totally YOLO edition.
+
+[1518-02-10 23:56] Guard #1487 begins shift
+[1518-02-11 00:14] falls asleep
+[1518-02-11 00:40] wakes up
+
+"""
 
 
 __author__ = "Serge Beaumont"
@@ -14,10 +20,6 @@ import re
 re_line = re.compile("\[(.*)\] (.*)")
 with open("AoC-2018-4-input.txt") as infile:
     lines = sorted([re_line.match(line.strip()).groups() for line in infile.readlines()])
-
-# [1518-02-10 23:56] Guard #1487 begins shift
-# [1518-02-11 00:14] falls asleep
-# [1518-02-11 00:40] wakes up
 
 guards = dict()
 
@@ -54,22 +56,15 @@ for line in lines:
             print("Wut?", line)
             break
 
-print(guards)
-
 max_sleep = 0
 for guard_id, guard_sleeps in guards.iteritems():
     if sum(guard_sleeps) > max_sleep:
         sleepy_guard_id = guard_id
         max_sleep = sum(guard_sleeps)
-    print(guard_id, sum(guard_sleeps))
-
-for i in range(60):
-    print(i, guards[sleepy_guard_id][i])
 
 sleepy_guard_sleep = guards[sleepy_guard_id]
 max_index = list(sleepy_guard_sleep).index(max(sleepy_guard_sleep))
 print(sleepy_guard_id, max_index, sleepy_guard_id * max_index)
-print()
 
 max_sleep = 0
 for guard_id, guard_sleeps in guards.iteritems():

@@ -6,10 +6,6 @@
 __author__ = "Serge Beaumont"
 __date__ = "December 2018"
 
-alphabet = "abcdefghijklmnopqrstuvwxyz"
-reactors = [''.join(pair) for pair in zip(alphabet, alphabet.upper()) + zip(alphabet.upper(), alphabet)]
-print(reactors)
-
 with open("AoC-2018-5-input.txt") as infile:
     polymer = infile.read()
 
