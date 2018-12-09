@@ -9,6 +9,7 @@ This solution works well because of the efficiency of collections.deque
 """
 
 from collections import defaultdict, deque
+import time
 
 NUM_ELVES = 463
 LAST_MARBLE = 71787
@@ -38,5 +39,11 @@ def play(last_marble):
 
 
 print(f"Part 1: {play(LAST_MARBLE)}")
+
 print("Calculating Part 2...")
+
+start = time.time()
 print(f"Part 2: {play(LAST_MARBLE * 100)}")
+end = time.time()
+
+print(f"Part 2 took {end - start} seconds to run.")
