@@ -20,7 +20,6 @@ def layout_claims():
     for claim in claims:
         x, y, w, h = claim[1:]
         fabric[x:x+w, y:y+h] += 1
-    print(sum(sum(fabric)))
 
 
 def overlapping_fabric():

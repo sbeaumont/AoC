@@ -8,7 +8,7 @@ __author__ = "Serge Beaumont"
 __date__ = "December 2018"
 
 with open("AoC-2018-8-input.txt") as infile:
-    tree = [int(n) for n in [line.strip().split(" ") for line in infile.readlines()][0]]
+    tree = [int(node) for node in infile.read().split(' ')]
 
 
 def tree_iterator():
@@ -47,4 +47,6 @@ class Node(object):
 root = Node()
 root.process(tree_iterator())
 
-print("Total is: {}".format(root.value()))
+print(f"Total is: {root.value()}")
+
+assert root.value() == 22306

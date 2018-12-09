@@ -3,7 +3,9 @@
 """
 Solution for Advent of Code challenge 2018 - Day 9
 
-463 players; last marble is worth 71787 points
+Assignment for 463 players; last marble is worth 71787 points
+
+This solution works well because of the efficiency of collections.deque
 """
 
 from collections import defaultdict, deque
@@ -35,5 +37,6 @@ def play(last_marble):
     return max(scores.values())
 
 
-print(play(LAST_MARBLE))
-print(play(LAST_MARBLE * 100))
+print(f"Part 1: {play(LAST_MARBLE)}")
+print("Calculating Part 2...")
+print(f"Part 2: {play(LAST_MARBLE * 100)}")
