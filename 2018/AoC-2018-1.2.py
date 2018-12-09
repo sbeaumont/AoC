@@ -5,7 +5,7 @@
 __author__ = "Serge Beaumont"
 __date__ = "December 2018"
 
-with open("AoC-2018-input-1.txt") as infile:
+with open("AoC-2018-1-input.txt") as infile:
     changes = [int(line) for line in infile.readlines()]
 
 frequencies_seen = set()
@@ -16,7 +16,7 @@ while not double_frequency_found:
     for change in changes:
         current_frequency += change
         if current_frequency in frequencies_seen:
-            print("First frequency found twice: {}".format(current_frequency))
+            print(f"First frequency found twice: {current_frequency}")
             double_frequency_found = True
             break
         else:
