@@ -10,6 +10,8 @@ __date__ = "December 2018"
 import numpy as np
 import re
 
+EXPECTED_CLAIM_ID = 560
+
 fabric = np.zeros((1000, 1000))
 re_claim = re.compile("#(\d+) @ (\d+),(\d+): (\d+)x(\d+)")
 with open("AoC-2018-3-input.txt") as infile:
@@ -20,18 +22,26 @@ def layout_claims():
     for claim in claims:
         x, y, w, h = claim[1:]
         fabric[x:x+w, y:y+h] += 1
-    print(sum(sum(fabric)))
 
 
-def overlapping_fabric():
-    overlap = 0
-    for i in range(1000):
-        for j in range(1000):
-            if fabric[i, j] > 1:
-                overlap += 1
-    return overlap
+def find_non_overlapping_claim():
+    def has_overlap(coords):
+        x, y, w, h = coords
+        for i in range(x, x+w):
+            for j in range(y, y+h):
+                if fabric[i, j] != 1:
+                    return True
+        return False
+
+    for claim in claims:
+        if not has_overlap(claim[1:]):
+            return claim[0]
+    return None
 
 
 layout_claims()
-print(f"Part 1: {overlapping_fabric()}")
-assert overlapping_fabric() == 112418
+claim_id = find_non_overlapping_claim()
+
+print(f"Part 2: {claim_id}")
+
+assert claim_id == EXPECTED_CLAIM_ID, f"Expected Claim ID {EXPECTED_CLAIM_ID}, got {claim_id}"

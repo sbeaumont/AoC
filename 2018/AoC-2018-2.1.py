@@ -5,8 +5,8 @@
 __author__ = "Serge Beaumont"
 __date__ = "December 2018"
 
-with open("AoC-2018-input-2.txt") as infile:
-    box_ids = [line for line in infile.readlines()]
+with open("AoC-2018-2-input.txt") as infile:
+    box_ids = [line.strip() for line in infile]
 
 two_times = 0
 three_times = 0
@@ -22,5 +22,6 @@ for box_id in box_ids:
             break
     two_times += 1 if two_letter_match else 0
     three_times += 1 if three_letter_match else 0
-print ("Checksum is {}".format(two_times * three_times))
+
+print("Checksum is {}".format(two_times * three_times))
 

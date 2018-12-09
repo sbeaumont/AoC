@@ -50,18 +50,17 @@ def hamming_distance(word1, word2):
 
 
 with open("AoC-2018-2-input.txt") as infile:
-    box_ids = sorted([line.strip() for line in infile.readlines()])
+    box_ids = sorted([line.strip() for line in infile])
 
 for i in range(len(box_ids)):
     if get_levenshtein_distance(box_ids[i], box_ids[i+1]) == 1:
         print("Levenshtein distance is 1 between:")
-        print("{} and".format(box_ids[i]))
-        print(box_ids[i+1])
+        print(f"{box_ids[i]} and\n{box_ids[i+1]}")
         print("\nThe common characters are:")
         print(''.join([c1 for c1, c2 in zip(box_ids[i], box_ids[i+1]) if c1 == c2]))
         break
 
-print("")
+print()
 
 for i in range(len(box_ids)):
     if hamming_distance(box_ids[i], box_ids[i+1]) == 1:
