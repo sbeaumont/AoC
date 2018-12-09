@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 
-"""Solution for Advent of Code challenge 2018 - Day 8 part 1
-
-"""
+"""Solution for Advent of Code challenge 2018 - Day 8 part 1"""
 
 __author__ = "Serge Beaumont"
 __date__ = "December 2018"
