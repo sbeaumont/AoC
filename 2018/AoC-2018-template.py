@@ -14,5 +14,4 @@ with open("AoC-2018-X-input.txt") as infile:
 
 # -----
 
-end = time.time()
-print(f"{end - start:.4f} seconds to run.")
+print(f"{time.time() - start:.4f} seconds to run.")
