@@ -12,6 +12,6 @@ start = time.time()
 with open("AoC-2018-X-input.txt") as infile:
     data = ([line.strip() for line in infile])
 
-# -----
+print(data)
 
 print(f"{time.time() - start:.4f} seconds to run.")
