@@ -1,15 +1,20 @@
+import time
+from collections import deque
+
 PUZZLE_INPUT_FILE_NAME = "AoC-2017-16-input.txt"
-START_DANCERS = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p"]
+START_DANCERS = ("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p")
 
 with open(PUZZLE_INPUT_FILE_NAME) as puzzle_input_file:
     moves = puzzle_input_file.read().split(",")
+    print(f"There are {len(moves)} moves.")
 
 
-def dance(dancers):
+def dance(dancers_in):
+    dancers = list(dancers_in)
     for move in moves:
         if move[0] == "x":
-            p1, p2 = [int(x) for x in move[1:].split("/")]
-            dancers[p1], dancers[p2] = dancers[p2], dancers[p1]
+            p1, p2 = move[1:].split("/")
+            dancers[int(p1)], dancers[int(p2)] = dancers[int(p2)], dancers[int(p1)]
         elif move[0] == "p":
             d1, d2 = move[1:].split("/")
             p1 = dancers.index(d1)
@@ -21,12 +26,11 @@ def dance(dancers):
     return dancers
 
 
-one_dance = dance(START_DANCERS.copy())
+start = time.time()
+one_dance = dance(START_DANCERS)
+end = time.time()
 
-print("After 1 dance: {}".format("".join(one_dance)))
+print(f"After 1 dance: {''.join(one_dance)} at {end - start:.4f} seconds.")
 
-for i in range(999999999):
-    if i % 1000000 == 0:
-        print(i)
-
-print("After 1000000000 dance: {}".format("".join(START_DANCERS)))
+# Known right answer
+assert ''.join(one_dance) == 'namdgkbhifpceloj'
