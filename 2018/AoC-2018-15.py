@@ -49,13 +49,20 @@ class Combatant(object):
         return self.arena.passable_neighbours(self.pos)
 
     def find_target(self):
+        # Scan the shortest paths to all reachable locations from this combatant's perspective.
         came_from = self.breadth_first_search()
+        # Get all coordinates of the "in range" (adjacent) locations to all enemies
         enemy_in_range = [j for i in [e.in_range() for e in self.enemies] for j in i]
+        # Find the intersection of in range and reachable coordinates: sort by reading order
         targets = sorted([c for c in came_from if c in enemy_in_range], key=lambda c: (c[1], c[0]))
         if targets:
+            # Reconstruct the paths to all the target coordinates
             target_paths = sorted([self.reconstruct_path(came_from, target) for target in targets], key=lambda p: (len(p)))
+            # Filter by the shortest path length
             shortest_length = min([len(p) for p in target_paths])
+            # Take the first steps of all these shortest paths adjacent to this combatant
             next_steps = [p[0] for p in target_paths if len(p) == shortest_length]
+            # Take the first adjacent step in reading order
             return sorted(next_steps, key=lambda c: (c[1], c[0]))[0]
 
     def reconstruct_path(self, came_from, goal):
@@ -69,6 +76,7 @@ class Combatant(object):
         return path
 
     def breadth_first_search(self):
+        # As always adapted from redblobgames.com's website
         frontier = deque()
         frontier.appendleft(self.pos)
         came_from = dict()
@@ -100,6 +108,7 @@ class Combatant(object):
         self.y = value[1]
 
     def __lt__(self, other):
+        # Reading order
         return (self.y < other.y) or ((self.y == other.y) and (self.x < other.x))
 
     def __str__(self):
