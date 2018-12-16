@@ -5,7 +5,7 @@
 __author__ = "Serge Beaumont"
 __date__ = "December 2018"
 
-from collections import deque, defaultdict
+from collections import deque
 import numpy as np
 
 adjacent_deltas = ((0, -1), (1, 0), (0, 1), (-1, 0))
