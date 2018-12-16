@@ -6,7 +6,6 @@ __author__ = "Serge Beaumont"
 __date__ = "December 2018"
 
 import time
-from collections import deque
 
 FIRST_RECIPES = [3, 7]
 PUZZLE_INPUT = [5, 0, 5, 9, 6, 1]
