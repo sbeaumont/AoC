@@ -137,7 +137,7 @@ for i in range(0, len(data), 4):
     before = [int(j) for j in line_regex.search(data[i]).group(1).split(",")]
     opcode = [int(j) for j in data[i+1].split(" ")]
     after = [int(j) for j in line_regex.search(data[i + 2]).group(1).split(",")]
-    #print(before, opcode, after)
+    # print(before, opcode, after)
     num_opcodes += 1
 
     op_match = 0
@@ -150,7 +150,6 @@ for i in range(0, len(data), 4):
 
 print(f"Total opcodes: {num_opcodes}")
 print(f"Number of opcodes with 3 or more matches: {more_than_three_matches}")
-
 
 
 print(f"{time.time() - start:.4f} seconds to run.")

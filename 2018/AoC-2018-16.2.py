@@ -7,7 +7,6 @@ __date__ = "December 2018"
 
 import time
 import re
-from pprint import pprint
 from collections import defaultdict
 
 start = time.time()
@@ -133,7 +132,12 @@ operations.append(eqrr)
 
 line_regex = re.compile(".*\[(\d+, \d+, \d+, \d+)\]")
 
-op_dict = {}
+# The op_dict was constructed by figuring out which opcodes lead to a single answer,
+# and filtering it out (by adding it to op_dict). Every time another opcode will
+# turn out to be the only possible option.
+
+op_dict = dict()
+
 op_dict[2] = bori
 op_dict[4] = addi
 op_dict[13] = mulr
@@ -152,12 +156,10 @@ op_dict[6] = gtri
 op_dict[5] = eqrr
 
 opcode_matches = defaultdict(set)
-opcode_fails = defaultdict(set)
 for i in range(0, len(data), 4):
     before = [int(j) for j in line_regex.search(data[i]).group(1).split(",")]
     opcode = [int(j) for j in data[i+1].split(" ")]
-    after = [int(j) for j in line_regex.search(data[i + 2]).group(1).split(",")]
-    #print(before, opcode, after)
+    after = [int(j) for j in line_regex.search(data[i+2]).group(1).split(",")]
 
     if opcode[0] not in op_dict:
         op_match = 0
@@ -166,11 +168,6 @@ for i in range(0, len(data), 4):
                 opcode_matches[opcode[0]].add(op.__name__)
 
 for code, oper in opcode_matches.items():
-    print(code, oper)
-
-print()
-
-for code, oper in opcode_fails.items():
     print(code, oper)
 
 print(f"{time.time() - start:.4f} seconds to run.")
