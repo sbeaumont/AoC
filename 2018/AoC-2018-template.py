@@ -7,11 +7,22 @@ __date__ = "December 2018"
 
 import time
 
-start = time.time()
 
-with open("AoC-2018-X-input.txt") as infile:
-    data = ([line.strip() for line in infile])
+def load_file(file_name):
+    with open(file_name) as infile:
+        data = ([line.strip() for line in infile])
+    return data
 
-print(data)
 
-print(f"{time.time() - start:.4f} seconds to run.")
+def do(file_name):
+    data = load_file(file_name)
+
+    print(data)
+
+
+if __name__ == "__main__":
+    start = time.time()
+
+    do("AoC-2018-X-input.txt")
+
+    print(f"{time.time() - start:.4f} seconds to run.")
