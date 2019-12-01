@@ -13,10 +13,17 @@ from itertools import permutations, combinations, chain, cycle, product
 from heapq import heappop, heappush
 
 
-def load_input(day):
+def load_input(day, splitlines=True, strip=True):
     """Open this day's input file."""
     with open(f"AoC-2019-input-{day}.txt") as infile:
-        data = infile.read()
+        if splitlines:
+            data = infile.readlines()
+            if strip:
+                data = [line.strip() for line in data]
+        else:
+            data = infile.read()
+            if strip:
+                data = data.strip()
     return data
 
 

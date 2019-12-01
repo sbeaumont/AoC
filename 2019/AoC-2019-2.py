@@ -7,10 +7,5 @@ __date__ = "December 2019"
 
 from norvigutils import load_input
 
-data = [int(x) for x in load_input(1)]
+data = load_input(2)
 
-total = sum([x // 3 - 2 for x in data])
-
-print("Part 1:", total)
-
-assert total == 3305115
