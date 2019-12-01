@@ -1,34 +1,6 @@
-# {
-#     "regions": [
-#         {
-#             "regionID": "BE4E78",
-#             "readings": [
-#                 {
-#                     "readingID": "A",
-#                     "reading": [
-#                         1,
-#                         1,
-#                         11,
-#                         -3,
-#                         -4,
-#                         10,
-#                         19,
-
-#                         ...
-
-#                         258,
-#                         262
-#                     ],
-#                     "date": "1-Dec-2018"
-#                 },
-#                 {
-#                     "readingID": "B",
-#                     "reading": [
-#                         0,
-#                         -1,
-#                         12,
-#                         -4,
-
+"""
+Solution to part three of Reaktor's puzzle.
+"""
 
 import json
 from collections import defaultdict
@@ -79,7 +51,6 @@ assert water_in_region((1, 2, 1, 0, 1, 3, 2, 1, 0, 1, 2, 1, 3)) == 15
 assert water_in_region((20, 0, 15)) == 15
 assert water_in_region((15, 0, 20)) == 15
 
-print(water_in_region(data['regions'][0]['readings'][0]['reading']))
 
 region_totals = defaultdict(list)
 for region in data['regions']:

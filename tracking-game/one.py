@@ -1,6 +1,8 @@
-import base64
+"""
+Solution to part one if Reaktor's puzzle.
+"""
 
-# Q3VydGlzaXNsYW5k wrong
+import base64
 
 with open("one.txt") as f:
     data = f.read()
