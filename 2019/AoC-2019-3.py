@@ -129,14 +129,14 @@ def convert_to_lines(wire_data):
     return wire_paths, (min_x, min_y, max_x, max_y)
 
 
-def draw_wires(wire_paths, minmax):
+def draw_wires(wire_paths, minmax, line_width=1):
     min_x, min_y, max_x, max_y = minmax
     im = Image.new('RGB', (abs(max_x - min_x), abs(max_y - min_y)), (0, 0, 0))
     draw = ImageDraw.Draw(im)
     for line in wire_paths[0]:
-        draw.line(line.transpose(Point(abs(min_x), abs(min_y))).as_tuple, (255, 255, 0), width=1)
+        draw.line(line.transpose(Point(abs(min_x), abs(min_y))).as_tuple, (255, 255, 0), width=line_width)
     for line in wire_paths[1]:
-        draw.line(line.transpose(Point(abs(min_x), abs(min_y))).as_tuple, (255, 0, 255), width=1)
+        draw.line(line.transpose(Point(abs(min_x), abs(min_y))).as_tuple, (255, 0, 255), width=line_width)
     draw.ellipse((abs(min_x) - 5, abs(min_y) - 5, abs(min_x) + 5, abs(min_y) + 5), fill=(255, 255, 255))
     im.show()
 
@@ -187,7 +187,7 @@ def do(data, show=False):
     wire_data = parse_wire_data(data)
     wire_paths, minmax = convert_to_lines(wire_data)
     if show:
-        draw_wires(wire_paths, minmax)
+        draw_wires(wire_paths, minmax, 10)
     return search_crossings(wire_paths[0], wire_paths[1])
 
 
@@ -202,7 +202,7 @@ if __name__ == '__main__':
         assert closest_crossing(c1) == 135
         assert shortest_length(c1) == 410, f"Expected 610, got {shortest_length(c1)}"
 
-    crossings = do(load_input(3))
+    crossings = do(load_input(3), True)
     d = closest_crossing(crossings)
     assert d != 76
     print(f"Part 1: {d}")
