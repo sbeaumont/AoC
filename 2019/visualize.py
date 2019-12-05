@@ -21,6 +21,8 @@ COLORS = (
 
 class Visualizer(object):
     def __init__(self, boundaries):
+        """boundaries allows you to set x and y boundaries that correspond to the puzzle values.
+        This class will then calculate how this maps onto the image."""
         self.min_x, self.min_y, self.max_x, self.max_y = boundaries
         self.im = Image.new('RGB', \
                             (abs(self.max_x - self.min_x), \
@@ -29,7 +31,7 @@ class Visualizer(object):
         self.draw = ImageDraw.Draw(self.im)
 
     def _rotate_left(self, point):
-        return point[1], self.max_x - point[0]
+        return point[0], self.im.height - point[1]
 
     def _to_image_coords(self, point):
         return self._rotate_left((point[0] - self.min_x, point[1] - self.min_y))
@@ -61,7 +63,7 @@ class Visualizer(object):
 
 if __name__ == '__main__':
     viz = Visualizer((0, 0, 210, 210))
-    viz.draw_line(((10, 10), (100, 100)), COLORS[0], width=5)
+    viz.draw_line(((10, 20), (50, 100)), COLORS[0], width=5)
     lines = (((110, 10), (200, 10)), ((200, 10), (200, 100)), ((200, 100), (110, 100)), ((110, 100), (110, 10)))
     viz.draw_lines(lines, COLORS[1], width=5)
     points = ((10, 110), (100, 110), (100, 200), (10, 200), (10, 110))
