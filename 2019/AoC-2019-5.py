@@ -27,44 +27,44 @@ def run_program(data, input_value):
             return data[n]
 
     def read_par(nr):
-        return val_or_pos(data[instruction_pointer + nr], p_mode(opcode, nr - 1))
+        return val_or_pos(data[i_ptr + nr], p_mode(opcode, nr - 1))
 
-    instruction_pointer = 0
+    i_ptr = 0
     halt_and_catch_fire = False
     while not halt_and_catch_fire:
-        opcode = str(data[instruction_pointer])
+        opcode = str(data[i_ptr])
         instruction = int(opcode) if len(opcode) == 1 else int(opcode[-2:])
 
         if instruction == 99:
             halt_and_catch_fire = True
         elif instruction in (1, 2):
-            write_pos = data[instruction_pointer + 3]
+            write_pos = data[i_ptr + 3]
             par1 = read_par(1)
             par2 = read_par(2)
             if instruction == 1:
                 data[write_pos] = par1 + par2
             elif instruction == 2:
                 data[write_pos] = par1 * par2
-            instruction_pointer += 4
+            i_ptr += 4
         elif instruction == 3:
-            par1 = data[instruction_pointer + 1]
+            par1 = data[i_ptr + 1]
             data[par1] = input_value
-            instruction_pointer += 2
+            i_ptr += 2
         elif instruction == 4:
-            par1 = data[instruction_pointer + 1]
+            par1 = data[i_ptr + 1]
             last_output = data[par1]
-            instruction_pointer += 2
+            i_ptr += 2
         elif instruction in (5, 6):
             par1 = read_par(1)
             par2 = read_par(2)
             if (instruction == 5) and (par1 != 0):
-                instruction_pointer = par2
+                i_ptr = par2
             elif (instruction == 6) and (par1 == 0):
-                instruction_pointer = par2
+                i_ptr = par2
             else:
-                instruction_pointer += 3
+                i_ptr += 3
         elif instruction in (7, 8):
-            write_pos = data[instruction_pointer + 3]
+            write_pos = data[i_ptr + 3]
             par1 = read_par(1)
             par2 = read_par(2)
             if (instruction == 7) and (par1 < par2):
@@ -73,7 +73,7 @@ def run_program(data, input_value):
                 data[write_pos] = 1
             else:
                 data[write_pos] = 0
-            instruction_pointer += 4
+            i_ptr += 4
         else:
             assert False, f"Unknown instruction: {instruction} in opcode {opcode}"
 

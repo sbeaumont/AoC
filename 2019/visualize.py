@@ -22,7 +22,9 @@ COLORS = (
 class Visualizer(object):
     def __init__(self, boundaries, scale=1):
         """boundaries allows you to set x and y boundaries that correspond to the puzzle values.
-        This class will then calculate how this maps onto the image."""
+        This class will then calculate how this maps onto the image.
+
+        Note that scale only scales coordinates, not line widths. Set those separately."""
         self.scale = scale
         self.min_x, self.min_y, self.max_x, self.max_y = boundaries
         self.min_x *= scale
