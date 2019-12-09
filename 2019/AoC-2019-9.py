@@ -24,15 +24,17 @@ if __name__ == '__main__':
     test1 = do([109, 1, 204, -1, 1001, 100, 1, 100, 1008, 100, 16, 101, 1006, 101, 0, 99])
     assert test1 == [109, 1, 204, -1, 1001, 100, 1, 100, 1008, 100, 16, 101, 1006, 101, 0,
                      99], f"Test 1 output: {test1}"
+
     test2 = do([1102, 34915192, 34915192, 7, 4, 7, 99, 0])
     assert len(str(test2[0])) == 16, f"Test 2 output: {test2}"
+
     test3 = do([104, 1125899906842624, 99])
     assert test3[0] == 1125899906842624, f"Test 3 output: {test3}"
 
     # Part 1
-    result = do(load_input(9), (1,))
+    result = do(load_input(9), [1])
     print(f"Part 1: {result}")
 
     # Part 2
-    result = do(load_input(9), (2,))
-    print(f"Part 1: {result}")
+    result = do(load_input(9), [2])
+    print(f"Part 2: {result}")

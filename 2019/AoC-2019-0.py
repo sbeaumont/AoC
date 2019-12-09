@@ -8,7 +8,7 @@ __date__ = "December 2019"
 
 def load_input(day):
     with open(f"AoC-2019-input-{day}.txt") as infile:
-        return [[int(y) for y in x.split(',')] for x in infile.readlines()]
+        return [[int(y) for y in x.strip().split(',')] for x in infile.readlines()]
 
 
 def do(data):
@@ -17,7 +17,8 @@ def do(data):
 
 if __name__ == '__main__':
     # Run tests
-    assert do(data)
+    # t1 = do(data)
+    # assert t1 == 'Expected Output', f"Expected X but got {t1}"
 
     # Load data
     data = load_input(0)

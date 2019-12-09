@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 
-"""Based on Day 5 part 2"""
+"""Intcode Computer used in days 5, 7, 9"""
 
 __author__ = "Serge Beaumont"
 __date__ = "December 2019"
 
+import os
 from collections import defaultdict
 
 
@@ -16,20 +17,33 @@ def p_mode(opcode, pos):
         return int(modes[pos]) if pos < len(modes) else 0
 
 
+def load_program_file(filename):
+    assert os.path.exists(filename), f"File {filename} does not exist."
+    with open(filename) as f:
+        return [int(x) for x in f.read().strip().split(',')]
+
+
 class Computer(object):
-    def __init__(self, program, setting=None, pause_on_output=False, debug=False):
+    @classmethod
+    def from_file(cls, file_name, setting=None, pause_on_output=False, debug=False):
+        return cls(load_program_file(file_name), setting, pause_on_output, debug)
+
+    def __init__(self, program: list, setting=None, pause_on_output=False, debug=False):
+        assert all(isinstance(item, int) for item in program), "Expected program to be a list of int"
+        # Initialize the program instructions
         self.program = defaultdict(int)
         self.init_program(program)
-        if setting is not None:
-            self.input = [setting]
-        else:
-            self.input = []
+        # Input and output
+        self.input = [setting] if setting is not None else []
         self.input_ptr = 0
         self.output = list()
-        self.pause_on_output = pause_on_output
+        # Instruction pointers
         self.i_ptr = 0
         self.r_base = 0
+        # Halt flags
         self.halted = False
+        self.pause_on_output = pause_on_output
+        # Debugging and catching fire
         self.on_fire = False
         self.debug = debug
 
@@ -49,10 +63,12 @@ class Computer(object):
         return self.output[-1]
 
     def run_program(self, input_values: list):
+        assert isinstance(input_values, list), f"Expected input_values to be a list, but {input_values} is type {type(input_values).__name__}"
         data = self.program
         self.input.extend(input_values)
 
-        def read_par(nr):
+        def read(nr):
+            """Read parameter based on mode"""
             mode = int(p_mode(opcode, nr - 1))
             n = self.i_ptr + nr
             if mode == 1:
@@ -78,50 +94,56 @@ class Computer(object):
             if self.debug:
                 print(instruction)
 
-            if instruction == 99:
-                self.halted = True
-                self.catch_fire()
-            elif instruction in (1, 2):
-                par1 = read_par(1)
-                par2 = read_par(2)
-                if instruction == 1:
-                    write(3, par1 + par2)
-                elif instruction == 2:
-                    write(3, par1 * par2)
+            if instruction == 1:
+                # Addition P1 + P2 => P3
+                write(3, read(1) + read(2))
                 self.i_ptr += 4
+
+            elif instruction == 2:
+                # Multiply P1 * P2 => P3
+                write(3, read(1) * read(2))
+                self.i_ptr += 4
+
             elif instruction == 3:
+                # Read from input
                 write(1, self.read_input_value())
                 self.i_ptr += 2
+
             elif instruction == 4:
-                par1 = read_par(1)
-                self.output.append(par1)
+                # Write to output
+                self.output.append(read(1))
                 self.i_ptr += 2
                 if self.pause_on_output:
-                    return self.output[-1]
-            elif instruction in (5, 6):
-                # Move pointer based on equal / not-equal zero
-                par1 = read_par(1)
-                par2 = read_par(2)
-                if (instruction == 5) and (par1 != 0):
-                    self.i_ptr = par2
-                elif (instruction == 6) and (par1 == 0):
-                    self.i_ptr = par2
-                else:
-                    self.i_ptr += 3
-            elif instruction in (7, 8):
-                par1 = read_par(1)
-                par2 = read_par(2)
-                if (instruction == 7) and (par1 < par2):
-                    write(3, 1)
-                elif (instruction == 8) and (par1 == par2):
-                    write(3, 1)
-                else:
-                    write(3, 0)
+                    return self.last_output()
+
+            elif instruction == 5:
+                # Jump to P2 if P1 != 0
+                self.i_ptr = read(2) if read(1) != 0 else self.i_ptr + 3
+
+            elif instruction == 6:
+                # Jump to P2 if P1 == 0
+                self.i_ptr = read(2) if read(1) == 0 else self.i_ptr + 3
+
+            elif instruction == 7:
+                # Test P1 < P2
+                write(3, 1 if read(1) < read(2) else 0)
                 self.i_ptr += 4
+
+            elif instruction == 8:
+                # Test P1 == P2
+                write(3, 1 if read(1) == read(2) else 0)
+                self.i_ptr += 4
+
             elif instruction == 9:
-                par1 = read_par(1)
-                self.r_base += par1
+                # Change relative addressing base
+                self.r_base += read(1)
                 self.i_ptr += 2
+
+            elif instruction == 99:
+                # Halt
+                self.halted = True
+                self.catch_fire()
+
             else:
                 assert False, f"Unknown instruction: {instruction} in opcode {opcode}"
 
