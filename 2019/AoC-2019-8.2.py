@@ -43,7 +43,7 @@ def print_picture(picture, sizes):
     for i in range(sizes[1]):
         start = i * sizes[0]
         end = start + sizes[0]
-        print(cat(['X' if c == '1' else ' ' for c in picture[start:end]]))
+        print(cat(['\u2588' if c == '1' else ' ' for c in picture[start:end]]))
 
 
 def do(data, sizes=(PIC_WIDTH, PIC_HEIGHT)):

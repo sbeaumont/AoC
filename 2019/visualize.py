@@ -7,6 +7,7 @@ Serge Beaumont, december 2019
 from PIL import Image, ImageDraw
 
 BACKGROUND_COLOR = (0, 0, 0)
+BLOCK = '\u2588'
 
 COLORS = (
     (255, 255, 0),

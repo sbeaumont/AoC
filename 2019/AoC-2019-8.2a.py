@@ -49,7 +49,7 @@ class Picture(object):
 
 def print_layer(layer):
     for line in layer:
-        print(cat(['X' if c == '1' else ' ' for c in line]))
+        print(cat(['\u2588' if c == '1' else ' ' for c in line]))
 
 
 def do(data, width, height):
