@@ -27,10 +27,19 @@ COLORS = (
 
 
 class Visualizer(object):
+    @classmethod
+    def boundaries(cls, pts, padding=1):
+        """Convenience function to calculate boundaries that will nicely fit all points to be drawn.
+        Only useful if all points are known before drawing."""
+        min_x = min([p[0] for p in pts])
+        max_x = max([p[0] for p in pts])
+        min_y = min([p[1] for p in pts])
+        max_y = max([p[1] for p in pts])
+        return min_x - padding, min_y - padding, max_x + padding, max_y + padding
+
     def __init__(self, boundaries, scale=1, flip_vertical=True):
         """boundaries allows you to set x and y boundaries that correspond to the puzzle values.
         This class will then calculate how this maps onto the image.
-
         Note that scale only scales coordinates, not line widths. Set those separately."""
         self.scale = scale
         self.flip_vertical = flip_vertical
@@ -60,6 +69,10 @@ class Visualizer(object):
     def draw_point(self, point, color, size=1):
         p = self._to_image_coords(point)
         self.draw.ellipse((p.x - size, p.y - size, p.x + size, p.y + size), fill=color)
+
+    def draw_square(self, point, color, size=1):
+        p = self._to_image_coords(point)
+        self.draw.rectangle((p.x - size, p.y - size, p.x + size, p.y + size), fill=color)
 
     def draw_points(self, points, color, size=1):
         for point in points:
@@ -100,5 +113,13 @@ if __name__ == '__main__':
     # Draw separate points
     points2 = ((120, 120), (140, 140), (160, 160), (180, 180))
     viz.draw_points(points2, COLORS[3], size=10)
+
+    # Draw a square
+    points3 = (140, 180)
+    viz.draw_square(points3, COLORS[4], size=10)
+
+    # Draw a single point
+    points3 = (120, 180)
+    viz.draw_point(points3, COLORS[5], size=10)
 
     viz.show()
