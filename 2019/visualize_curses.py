@@ -81,6 +81,8 @@ class CursesVisualizer(object):
 if __name__ == '__main__':
     with CursesVisualizer(((-10, -10), (10, 10))) as cv:
         cv.plot_multiple([(-10, -10, '\u2588'), (10, 10, '\u2588'), (-10, 10, '\u2588')])
+        for i in range(-5, 6):
+            cv.plot((i, 5), '#')
         cv.plot((10, -10), '\u2588')
         cv.write((-5, 0), "Woop woop")
         cv.refresh()
