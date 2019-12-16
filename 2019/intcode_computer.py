@@ -28,15 +28,17 @@ class Computer(object):
     def from_file(cls, file_name, setting=None, pause_on_output=False, debug=False):
         return cls(load_program_file(file_name), setting, pause_on_output, debug)
 
-    def __init__(self, program: list, setting=None, pause_on_output=False, debug=False):
+    def __init__(self, program: list, setting=None, pause_on_output=0, debug=False, remember_input=True):
         assert all(isinstance(item, int) for item in program), "Expected program to be a list of int"
         # Initialize the program instructions
         self.program = defaultdict(int)
         self.init_program(program)
+        self.remember_input = remember_input
         # Input and output
         self.input = [setting] if setting is not None else []
         self.input_ptr = 0
         self.output = list()
+        self.output_history = list()
         # Instruction pointers
         self.i_ptr = 0
         self.r_base = 0
@@ -60,12 +62,24 @@ class Computer(object):
         return result
 
     def last_output(self):
-        return self.output[-1]
+        if self.pause_on_output <= 1:
+            result = [self.output[0]]
+            self.output_history.append(result)
+        else:
+            result = self.output[-self.pause_on_output:]
+            self.output_history.extend(result)
+        self.output = list()
+        return result
 
     def run_program(self, input_values: list):
-        assert isinstance(input_values, list), f"Expected input_values to be a list, but {input_values} is type {type(input_values).__name__}"
+        assert (input_values is None) or (isinstance(input_values, list), f"Expected input_values to be a list, but {input_values} is type {type(input_values).__name__}")
         data = self.program
-        self.input.extend(input_values)
+        if input_values:
+            if self.remember_input:
+                self.input.extend(input_values)
+            else:
+                self.input = input_values
+                self.input_ptr = 0
 
         def read(nr):
             """Read parameter based on mode"""
@@ -113,7 +127,7 @@ class Computer(object):
                 # Write to output
                 self.output.append(read(1))
                 self.i_ptr += 2
-                if self.pause_on_output:
+                if self.pause_on_output and len(self.output) >= self.pause_on_output:
                     return self.last_output()
 
             elif instruction == 5:
@@ -147,4 +161,4 @@ class Computer(object):
             else:
                 assert False, f"Unknown instruction: {instruction} in opcode {opcode}"
 
-        return self.last_output()
+        return False

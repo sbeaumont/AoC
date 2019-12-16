@@ -13,7 +13,7 @@ def phase_settings():
 
 def run_amplifiers(program, settings, input_signal=0):
     for setting in settings:
-        computer = Computer(program, setting)
+        computer = Computer(program, setting, pause_on_output=1)
         output_value = computer.run_program([input_signal])
         input_signal = output_value
     return output_value

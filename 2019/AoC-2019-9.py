@@ -33,8 +33,8 @@ if __name__ == '__main__':
 
     # Part 1
     result = do(load_input(9), [1])
-    print(f"Part 1: {result}")
+    print(f"Part 1: {result[0]}")
 
     # Part 2
     result = do(load_input(9), [2])
-    print(f"Part 2: {result}")
+    print(f"Part 2: {result[0]}")

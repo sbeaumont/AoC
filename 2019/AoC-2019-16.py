@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 
-"""Solution for Advent of Code challenge 2019 - Day X"""
+"""Solution for Advent of Code challenge 2019 - Day 16"""
 
 __author__ = "Serge Beaumont"
 __date__ = "December 2019"
+
+
+BASE_PATTERN = (0, 1, 0, -1)
 
 
 def load_input(day):
@@ -22,13 +25,15 @@ def test(test_data, expected):
 
 if __name__ == '__main__':
     # Run tests
-    test('testdata', 'testdata')
+    test('80871224585914546619083218645595', '24176176')
+    test('19617804207202209144916044189917', '73745418')
+    test('69317163492948606335995924319873', '52432133')
 
     # Check data
-    print(f"Input data: {load_input(0)}\n")
+    print(f"Input data: {load_input(16)}\n")
 
     # Solve puzzle
-    result = do(load_input(0))
+    result = do(load_input(16))
 
     # Output
     print(f"Part 1: {result}")
