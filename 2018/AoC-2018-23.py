@@ -10,7 +10,7 @@ import re
 
 start = time.time()
 
-regex = re.compile("pos=<(-?\d+),(-?\d+),(-?\d+)>, r=(\d+)")
+regex = re.compile(r"pos=<(-?\d+),(-?\d+),(-?\d+)>, r=(\d+)")
 
 with open("AoC-2018-23-input.txt") as infile:
     data = ([line.strip() for line in infile])
