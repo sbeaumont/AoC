@@ -33,7 +33,7 @@ baseMatrix = np.array(propertyMatrix).T[0:-1]
 calorieMatrix = np.array(propertyMatrix).T[-1]
 
 def score(mix):
-    # Multiply ingredients with chosen mix
+    # Multiply all_ingredients with chosen mix
     mixed = baseMatrix * np.array(mix)
     # Add properties and multiply them for final score
     mixedSums = np.sum(mixed, axis=1)
