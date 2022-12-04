@@ -19,7 +19,7 @@ def part_1(entries):
         half = len(e) // 2
         c1 = set(e[:half])
         c2 = set(e[half:])
-        odd_one_out = list(c1.intersection(c2))[0]
+        odd_one_out = c1.intersection(c2).pop()
         total_score += priority(odd_one_out)
     return total_score
 

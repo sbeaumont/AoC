@@ -15,7 +15,7 @@ def part_2(entries):
 
 
 def read_puzzle_data(file_number):
-    with open(f"AoC-2021-{file_number}-input.txt") as infile:
+    with open(f"AoC-2022-{file_number}-input.txt") as infile:
         lines = [line.strip() for line in infile.readlines()]
     return lines
 
@@ -33,4 +33,6 @@ if __name__ == '__main__':
     print("Test Part 2:", test_result_part_2)
     assert test_result_part_2 == 0
 
-    print("     Part 2:", part_2(read_puzzle_data(DAY)))
+    result_part_2 = part_2(read_puzzle_data(DAY))
+    print("     Part 2:", result_part_2)
+    assert result_part_2 == 0
