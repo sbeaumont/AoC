@@ -25,14 +25,14 @@ if __name__ == '__main__':
 
     test_result_part_1 = part_1(read_puzzle_data(f"{DAY}-test"))
     print("Test Part 1:", test_result_part_1)
-    assert test_result_part_1 == 0
-
-    print("     Part 1:", part_1(read_puzzle_data(DAY)))
-
-    test_result_part_2 = part_2(read_puzzle_data(f"{DAY}-test"))
-    print("Test Part 2:", test_result_part_2)
-    assert test_result_part_2 == 0
-
-    result_part_2 = part_2(read_puzzle_data(DAY))
-    print("     Part 2:", result_part_2)
-    assert result_part_2 == 0
+    # assert test_result_part_1 == 0
+    #
+    # print("     Part 1:", part_1(read_puzzle_data(DAY)))
+    #
+    # test_result_part_2 = part_2(read_puzzle_data(f"{DAY}-test"))
+    # print("Test Part 2:", test_result_part_2)
+    # assert test_result_part_2 == 0
+    #
+    # result_part_2 = part_2(read_puzzle_data(DAY))
+    # print("     Part 2:", result_part_2)
+    # assert result_part_2 == 0
