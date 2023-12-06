@@ -5,6 +5,8 @@
 __author__ = "Serge Beaumont"
 __date__ = "December 2023"
 
+import sys
+
 
 def part_1(entries):
     return 0
@@ -21,7 +23,8 @@ def read_puzzle_data(file_number):
 
 
 if __name__ == '__main__':
-    DAY = "X"
+    DAY = sys.argv[0].split('.')[0].split('-')[-1]
+    print("Results for day", DAY)
 
     test_result_part_1 = part_1(read_puzzle_data(f"{DAY}-test"))
     print("Test Part 1:", test_result_part_1)
