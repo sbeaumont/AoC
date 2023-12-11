@@ -101,7 +101,7 @@ def do(data):
     return result
 
 
-def do_part_2(station, data):
+def do_part_2(station, data, asteroids_max: str|int=200):
     asteroids = init_asteroids(data)
 
     viz = Visualizer((-1, -1, 36, 36), 20, False)
@@ -109,18 +109,23 @@ def do_part_2(station, data):
         viz.draw_point(xy, COLORS[2], 4)
 
     grouped_by_angle = defaultdict(list)
+    total_asteroids = 0
     for location in station.locations_by_angle(asteroids):
         grouped_by_angle[location.angle].append(location)
+        total_asteroids += 1
+
+    if asteroids_max == 'max':
+        asteroids_max = total_asteroids
 
     asteroids_shot = 0
     asteroid_200 = None
-    while asteroids_shot < 200:
+    while asteroids_shot < asteroids_max:
         for angle, locations in grouped_by_angle.items():
             asteroids_shot += 1
             last_asteroid_shot = locations[0].asteroid
             viz.draw_line((station.xy, last_asteroid_shot.xy), COLORS[1], 2)
             viz.draw_point(last_asteroid_shot.xy, Color(R=255, G=0, B=0), 4)
-            if asteroids_shot == 200:
+            if asteroids_shot == asteroids_max:
                 asteroid_200 = last_asteroid_shot
                 break
             grouped_by_angle[angle] = locations[1:]
@@ -131,14 +136,19 @@ def do_part_2(station, data):
 
 
 if __name__ == '__main__':
-    # Part 1
     station = do(load_input(10))
-    print(f"\nPart 1: {station} with {len(station.visible)} visible asteroids.")
+
+    # Part 1
+    # print(f"\nPart 1: {station} with {len(station.visible)} visible asteroids.")
 
     # Part 2
-    asteroid2 = do_part_2(station, load_input(10))
-    code = asteroid2.x * 100 + asteroid2.y
-    print(f"200th asteroid shot is: {asteroid2}: {code}")
+    # asteroid2 = do_part_2(station, load_input(10))
+    # code = asteroid2.x * 100 + asteroid2.y
+    # print(f"200th asteroid shot is: {asteroid2}: {code}")
+
+    # The AgFx Avatar
+    do_part_2(station, load_input(10), asteroids_max=277)
+
 
 
 
