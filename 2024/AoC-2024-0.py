@@ -31,10 +31,10 @@ if __name__ == '__main__':
     print("Test 1:", test_result)
     # assert test_result == 0
 
-    print("Part 1:", part_1(read_puzzle_data(puzzle_number)))
-
-    test_result_2 = part_2(read_puzzle_data(f"{puzzle_number}"))
-    print("Test 2:", test_result_2)
+    # print("Part 1:", part_1(read_puzzle_data(puzzle_number)))
+    #
+    # test_result_2 = part_2(read_puzzle_data(f"{puzzle_number}-test"))
+    # print("Test 2:", test_result_2)
     # assert test_result_2 == 31
 
-    print("Part 2:", part_2(read_puzzle_data(puzzle_number)))
+    # print("Part 2:", part_2(read_puzzle_data(puzzle_number)))
