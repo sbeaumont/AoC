@@ -98,7 +98,7 @@ def part_2(entries: list[str]):
                 loop_area.guard_route()
                 if loop_area.has_loop:
                     total += 1
-                    # print_visited(loop_area.visited, loop_area.entries)
+    # print_visited(loop_area.visited, loop_area.entries)
     return total
 
 
