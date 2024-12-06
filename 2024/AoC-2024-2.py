@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
-"""Solution for Advent of Code challenge 2023 - Day 1"""
+"""Solution for Advent of Code challenge 2024"""
 
 __author__ = "Serge Beaumont"
-__date__ = "December 2023"
+__date__ = "December 2024"
 
 
 def get_differences(report):
