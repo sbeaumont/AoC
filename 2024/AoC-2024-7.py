@@ -7,8 +7,6 @@ __date__ = "December 2024"
 
 from itertools import product
 
-from norvigutils import trace
-
 
 def parse_line(line):
     answer, parameters = line.split(':')
@@ -44,7 +42,6 @@ def part_1(entries: list[str], trace=False):
 
 def part_2(entries: list[str], trace=False):
     total = 0
-    print_stack = []
     for e in entries:
         answer, parameters = parse_line(e)
         # print(list(product(('+', '*', '||'), repeat=len(parameters) - 1)))
