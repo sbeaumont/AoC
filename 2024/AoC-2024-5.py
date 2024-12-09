@@ -40,13 +40,15 @@ def calculate_score(updates):
         total += e[middle_index]
     return total
 
-def part_1(rules: list, entries: list[list]):
+def part_1(puzzle_data: list):
+    rules, entries = puzzle_data
     # all_page_numbers_in_rules = {x for xs in rules for x in xs}
     updates = find_correct_updates(condense_rules(rules), entries)
     return calculate_score(updates)
 
 
-def part_2(rules: list, entries: list[list]):
+def part_2(puzzle_data: list):
+    rules, entries = puzzle_data
     cd = condense_rules(rules)
     updates = find_incorrect_updates(cd, entries)
     corrected_updates = list()
@@ -62,8 +64,8 @@ def part_2(rules: list, entries: list[list]):
     return calculate_score(corrected_updates)
 
 
-def read_puzzle_data(file_number):
-    with open(f"AoC-2024-{file_number}-input.txt") as infile:
+def read_puzzle_data(data_file: str):
+    with open(data_file) as infile:
         lines = infile.readlines()
         empty_line_index = lines.index("\n")
 
@@ -76,18 +78,9 @@ def read_puzzle_data(file_number):
         return rules, updates
 
 
-if __name__ == '__main__':
-    puzzle_number = int(__file__.split('.')[0].split('-')[-1])
-    print(f"Day {puzzle_number}")
-
-    test_result = part_1(*read_puzzle_data(f"{puzzle_number}-test"))
-    print("Test 1:", test_result)
-    assert test_result == 143
-
-    print("Part 1:", part_1(*read_puzzle_data(puzzle_number)))
-
-    test_result_2 = part_2(*read_puzzle_data(f"{puzzle_number}-test"))
-    print("Test 2:", test_result_2)
-    assert test_result_2 == 123
-
-    print("Part 2:", part_2(*read_puzzle_data(puzzle_number)))
+assertions = {
+    "Test 1": 143,
+    "Part 1": None,
+    "Test 2": 123,
+    "Part 2": None
+}
