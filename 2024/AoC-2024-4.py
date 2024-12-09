@@ -17,6 +17,7 @@ def transpose(entries):
         transposed.append(''.join(vertical_line))
     return transposed
 
+
 def rotate_left(entries):
     rotated = list()
     for x in range(len(entries[0])-1, -1, -1):
@@ -33,6 +34,7 @@ def scan_horizontal(entries):
     for e in entries:
         total += len(re.findall(pattern, e))
     return total
+
 
 def transpose_diagonal(entries):
     # print(entries)
@@ -90,7 +92,7 @@ def read_puzzle_data(data_file: str) -> list:
 
 assertions = {
     "Test 1": 18,
-    "Part 1": None,
+    "Part 1": 2390,
     "Test 2": 9,
-    "Part 2": None
+    "Part 2": 1809
 }

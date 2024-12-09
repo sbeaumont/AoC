@@ -1,38 +1,20 @@
 # Taken from https://nbviewer.jupyter.org/url/norvig.com/ipython/Advent%20of%20Code.ipynb
 # And then adapted to my style, tweaked not Pythonic naming etc.
 
-# Python 3.x
 import re
 import numpy as np
 import math
-import urllib.request
-
-from collections import Counter, defaultdict, namedtuple, deque
-from functools import lru_cache
-from itertools import permutations, combinations, chain, cycle, product
+from collections import defaultdict
+from itertools import combinations
 from heapq import heappop, heappush
-
-
-def load_input(day, readlines=True):
-    """Open this day's input file."""
-    with open(f"AoC-2019-input-{day}.txt") as infile:
-        if readlines:
-            return infile.readlines()
-        else:
-            return infile.read()
-
 
 def transpose(matrix): return zip(*matrix)
 
-
 def first(iterable): return next(iter(iterable))
-
 
 def firsttrue(iterable): return first(it for it in iterable if it)
 
-
 def counttrue(iterable): return sum(bool(it) for it in iterable)
-
 
 cat = ''.join
 
@@ -41,13 +23,11 @@ inf = float('inf')
 BIG = 10 ** 999
 directions = ((0, -1), (1, 0), (0, 1), (-1, 0))
 
-
 def grep(pattern, lines):
     """Print lines that match pattern."""
     for line in lines:
         if re.search(pattern, line):
             print(line)
-
 
 def groupby(iterable, key=lambda it: it):
     """Return a dic whose keys are key(it) and whose values are all the elements of iterable with that key."""
@@ -66,10 +46,10 @@ def powerset(iterable):
 
 
 # 2-D points implemented using (x, y) tuples
-def X(point): return point[0]
+def x(point): return point[0]
 
 
-def Y(point): return point[1]
+def y(point): return point[1]
 
 
 def neighbors4(point):
@@ -87,12 +67,12 @@ def neighbors8(point):
 
 def cityblock_distance(p, q=(0, 0)):
     """City block distance between two points."""
-    return abs(X(p) - X(q)) + abs(Y(p) - Y(q))
+    return abs(x(p) - x(q)) + abs(y(p) - y(q))
 
 
 def euclidean_distance(p, q=(0, 0)):
     """Euclidean (hypotenuse) distance between two points."""
-    return math.hypot(X(p) - X(q), Y(p) - Y(q))
+    return math.hypot(x(p) - x(q), y(p) - y(q))
 
 
 def trace1(f):

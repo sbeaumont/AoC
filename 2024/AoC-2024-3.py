@@ -33,23 +33,19 @@ def part_2(data: str):
     return total
 
 
-def read_puzzle_data(file_number):
-    with open(f"AoC-2024-{file_number}-input.txt") as infile:
+def read_puzzle_data(data_file: str) -> str:
+    with open(data_file) as infile:
         return infile.read()
 
 
-if __name__ == '__main__':
-    puzzle_number = int(__file__.split('.')[0].split('-')[-1])
-    print(f"Day {puzzle_number}")
+assertions = {
+    "Test 1": 161,
+    "Part 1": None,
+    "Test 2": 48,
+    "Part 2": None
+}
 
-    test_result = part_1(read_puzzle_data(f"{puzzle_number}-test"))
-    print("Test 1:", test_result)
-    assert test_result == 161
+overrides = {
+    "Test 2": {'data file': "AoC-2024-3-test-2-input.txt",}
+}
 
-    print("Part 1:", part_1(read_puzzle_data(puzzle_number)))
-
-    test_result_2 = part_2(read_puzzle_data(f"{puzzle_number}-test-2"))
-    print("Test 2:", test_result_2)
-    assert test_result_2 == 48
-
-    print("Part 2:", part_2(read_puzzle_data(puzzle_number)))

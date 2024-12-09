@@ -52,24 +52,14 @@ def part_2(entries: list[str], trace=False):
     return total
 
 
-def read_puzzle_data(file_number):
-    with open(f"AoC-2024-{file_number}-input.txt") as infile:
+def read_puzzle_data(data_file: str):
+    with open(data_file) as infile:
         return [[int(level) for level in line.strip().split()] for line in infile.readlines()]
 
 
-if __name__ == '__main__':
-    puzzle_number = int(__file__.split('.')[0].split('-')[-1])
-    print(f"Day {puzzle_number}")
-
-    test_result = part_1(read_puzzle_data(f"{puzzle_number}-test"))
-    print("Test 1:", test_result)
-    assert test_result == 2
-
-    print("Part 1:", part_1(read_puzzle_data(puzzle_number)))
-    assert part_1(read_puzzle_data(puzzle_number)) == 524
-
-    test_result_2 = part_2(read_puzzle_data(f"{puzzle_number}-test"))
-    print("Test 2:", test_result_2)
-    assert test_result_2 == 5
-
-    print("Part 2:", part_2(read_puzzle_data(puzzle_number), trace=False))
+assertions = {
+    "Test 1": 2,
+    "Part 1": 524,
+    "Test 2": 5,
+    "Part 2": None
+}

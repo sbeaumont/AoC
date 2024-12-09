@@ -39,6 +39,13 @@ class PuzzleRepo(object):
                 return puzzle
         return None
 
+    def tests_for_puzzle(self, puzzle_path: Path) -> list[Path]:
+        tests = []
+        p_year, p_day = puzzle_path.stem.split('-')[1:3]
+        for file in puzzle_path.parent.iterdir():
+            if file.is_file() and file.name.startswith(f"AoC-{p_year}-{p_day}-test"):
+                tests.append(file)
+        return tests
 
 class Puzzle(object):
     def __init__(self, puzzle_path: Path):
@@ -50,6 +57,12 @@ class Puzzle(object):
 
     def _run(self, data_file_name: Path, part_func_name: str, step_name: str):
         result = {'success': True, 'answer': None, 'message': ''}
+
+        if self.has_override(step_name):
+            override = getattr(self.mod, "overrides")[step_name]
+            if "data file" in override:
+                data_file_name = data_file_name.with_name(override["data file"])
+
         if hasattr(self.mod, part_func_name) and isfunction(getattr(self.mod, part_func_name)):
             result['answer'] = getattr(self.mod, part_func_name)(self.mod.read_puzzle_data(data_file_name))
             if self.has_assertion(step_name) and (result['answer'] != self.mod.assertions[step_name]):
@@ -62,6 +75,9 @@ class Puzzle(object):
 
     def has_assertion(self, name):
         return hasattr(self.mod, "assertions") and self.mod.assertions.get(name, None) is not None
+
+    def has_override(self, name):
+        return hasattr(self.mod, "overrides") and self.mod.overrides.get(name, None) is not None
 
     @property
     def test_file(self):
