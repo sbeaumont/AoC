@@ -1,7 +1,8 @@
-from importlib import import_module
-from pathlib import Path
-from inspect import isfunction
 import argparse
+import sys
+from importlib import import_module
+from inspect import isfunction
+from pathlib import Path
 
 
 class PuzzleRepo(object):
@@ -82,36 +83,44 @@ class Puzzle(object):
     def run_part_2(self):
         return self._run(self.data_file, "part_2", "Part 2")
 
-    def run_all(self):
+    def run_all(self, run_steps: tuple):
         results = dict()
+        keep_running = True
 
-        results["Test 1"] = self.run_part_1_test()
-        print("Test 1:", results["Test 1"]["answer"], results["Test 1"]["message"])
+        if "T1" in run_steps:
+            results["Test 1"] = self.run_part_1_test()
+            keep_running = results["Test 1"]["success"]
+            print("Test 1:", results["Test 1"]["answer"], results["Test 1"]["message"])
 
-        if results["Test 1"]["success"]:
+        if ("P1" in run_steps) and keep_running:
             results["Part 1"] = self.run_part_1()
+            keep_running = results["Part 1"]["success"]
             print("Part 1:", results["Part 1"]["answer"], results["Part 1"]["message"])
 
-        if "Part 1" in results and results["Part 1"]["success"]:
+        if ("T2" in run_steps) and keep_running:
             results["Test 2"] = self.run_part_2_test()
+            keep_running = results["Test 2"]["success"]
             print("Test 2:", results["Test 2"]["answer"], results["Test 2"]["message"])
 
-        if "Test 2" in results and results["Test 2"]["success"]:
+        if ("P2" in run_steps) and keep_running:
             results["Part 2"] = self.run_part_2()
             print("Part 2:", results["Part 2"]["answer"], results["Part 2"]["message"])
 
         return results
 
 
-def run_puzzle(puzzle_path: Path):
+def run_puzzle(puzzle_path: Path, run_steps: tuple=None):
     puzzle = Puzzle(puzzle_path)
+    if not run_steps:
+        run_steps = ("T1", "P1", "T2", "P2")
     print("Year:", puzzle.year, "Day:", puzzle.day)
-    puzzle.run_all()
+    print("Running steps", *run_steps)
+    puzzle.run_all(run_steps)
 
 
-def run_last_puzzle():
+def run_last_puzzle(run_steps: tuple=None):
     repo = PuzzleRepo.create_instance()
-    run_puzzle(repo.last_puzzle())
+    run_puzzle(repo.last_puzzle(), run_steps)
 
 
 if __name__ == '__main__':
@@ -119,29 +128,36 @@ if __name__ == '__main__':
     parser.add_argument("-y", "--year", type=str, help="Year")
     parser.add_argument("-d", "--day", type=str, help="Day")
     parser.add_argument("-q", "--query", help="Ask for remaining params", action="store_true")
+    parser.add_argument("-s", "--steps", nargs="+", help="Steps to run")
     args = parser.parse_args()
+
+    steps = tuple(args.steps) if args.steps else tuple()
+
+    for step in steps:
+        if step not in ("T1", "P1", "T2", "P2"):
+            sys.exit(f"Step {step} is not T1, P1, T2 or P2.")
 
     repo = PuzzleRepo.create_instance()
     if args.year and args.day:
-        run_puzzle(repo.puzzle(args.year, args.day))
+        run_puzzle(repo.puzzle(args.year, args.day), steps)
     elif not args.year and args.day:
-        run_puzzle(repo.puzzle(repo.last_year, args.day))
+        run_puzzle(repo.puzzle(repo.last_year, args.day), steps)
     elif args.year and not args.day:
         if args.query:
             day = input("Which day?\n> ")
             if day.isnumeric():
-                run_puzzle(repo.puzzle(args.year, day))
+                run_puzzle(repo.puzzle(args.year, day), steps)
             else:
                 print(f"Invalid input: {day} is not a number.")
         else:
-            run_puzzle(repo.last_puzzle_for_year(args.year))
+            run_puzzle(repo.last_puzzle_for_year(args.year), steps)
     else:
         if args.query:
             year = input("Which year?\n> ")
             day = input("Which day?\n> ")
             if day.isnumeric() and year.isnumeric():
-                run_puzzle(repo.puzzle(year, day))
+                run_puzzle(repo.puzzle(year, day), steps)
             else:
                 print(f"Invalid input: {day} or {year} is not a number.")
         else:
-            run_last_puzzle()
+            run_last_puzzle(steps)
