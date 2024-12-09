@@ -1,6 +1,5 @@
 import shutil
 import os
-from urllib.request import urlretrieve
 
 max_puzzle_number = max([int(filename.split('.')[0].split('-')[2]) for filename in os.listdir(".") if filename.startswith('AoC')])
 next_puzzle_number = max_puzzle_number + 1
