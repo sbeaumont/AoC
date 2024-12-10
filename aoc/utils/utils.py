@@ -52,7 +52,7 @@ def x(point): return point[0]
 def y(point): return point[1]
 
 
-def neighbors4(point):
+def neighbors4(point, max_xy=None):
     """The four neighbors (without diagonals)."""
     x, y = point
     return (x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)

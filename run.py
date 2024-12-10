@@ -22,7 +22,7 @@ class PuzzleRepo(object):
         for file in puzzle_dir.iterdir():
             if file.is_file() and file.suffix == '.py' and file.name.startswith(f"AoC-{puzzle_dir.name}-"):
                 puzzles.append(file)
-        return sorted(puzzles, key=lambda p: int(p.stem.split('-')[-1]))
+        return sorted(puzzles, key=lambda p: int(p.stem.split('-')[2]))
 
     def puzzles_for_year(self, year: str) -> list[Path]:
         return self.puzzles_for_dir(self.root / year)
@@ -35,7 +35,7 @@ class PuzzleRepo(object):
 
     def puzzle(self, year: str, day: str) -> Path | None:
         for puzzle in self.puzzles_for_year(year):
-            if day == puzzle.stem.split('-')[-1]:
+            if day == puzzle.stem.split('-')[2]:
                 return puzzle
         return None
 
