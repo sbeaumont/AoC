@@ -47,6 +47,7 @@ class PuzzleRepo(object):
                 tests.append(file)
         return tests
 
+
 class Puzzle(object):
     def __init__(self, puzzle_path: Path):
         self.path = puzzle_path
@@ -55,7 +56,7 @@ class Puzzle(object):
         self.day = int(puzzle_path.stem.split('-')[-1])
         self.year = puzzle_path.parent.name
 
-    def _run(self, data_file_name: Path, part_func_name: str, step_name: str):
+    def _run(self, data_file_name: Path, part_func_name: str, step_name: str, expected_outcome=None):
         result = {'success': True, 'answer': None, 'message': ''}
 
         if self.has_override(step_name):
@@ -65,12 +66,12 @@ class Puzzle(object):
 
         if hasattr(self.mod, part_func_name) and isfunction(getattr(self.mod, part_func_name)):
             result['answer'] = getattr(self.mod, part_func_name)(self.mod.read_puzzle_data(data_file_name))
-            if self.has_assertion(step_name) and (result['answer'] != self.mod.assertions[step_name]):
-                result['message'] = f"Incorrect: expected {self.mod.assertions[step_name]}, got {result['answer']}"
+            if expected_outcome is not None and (expected_outcome != result['answer']):
+                result['message'] = f"Incorrect: expected {expected_outcome}, got {result['answer']}"
                 result['success'] = False
         else:
-            result['success'] = False
             result['message'] = f"Puzzle {self.year} does not have {part_func_name} function."
+            result['success'] = False
         return result
 
     def has_assertion(self, name):
@@ -79,27 +80,49 @@ class Puzzle(object):
     def has_override(self, name):
         return hasattr(self.mod, "overrides") and self.mod.overrides.get(name, None) is not None
 
-    @property
-    def test_file(self):
-        return self.path.with_name(f"AoC-{self.year}-{self.day}-test-input.txt")
+    def has_extra_tests(self, name):
+        return hasattr(self.mod, "extra_tests") and self.mod.extra_tests.get(name, None) is not None
+
+    def test_file(self, alt_file=None):
+        if alt_file:
+            return self.path.with_name(alt_file)
+        else:
+            return self.path.with_name(f"AoC-{self.year}-{self.day}-test-input.txt")
 
     @property
     def data_file(self):
         return self.path.with_name(f"AoC-{self.year}-{self.day}-input.txt")
 
     def run_part_1_test(self):
-        return self._run(self.test_file, "part_1", "Test 1")
+        expected_outcome = self.mod.assertions["Test 1"] if self.has_assertion("Test 1") else None
+        return self._run(self.test_file(), "part_1", "Test 1", expected_outcome)
 
     def run_part_1(self):
-        return self._run(self.data_file, "part_1", "Part 1")
+        expected_outcome = self.mod.assertions["Part 1"] if self.has_assertion("Part 1") else None
+        return self._run(self.data_file, "part_1", "Part 1", expected_outcome)
 
     def run_part_2_test(self):
-        return self._run(self.test_file, "part_2", "Test 2")
+        expected_outcome = self.mod.assertions["Test 2"] if self.has_assertion("Test 2") else None
+        return self._run(self.test_file(), "part_2", "Test 2", expected_outcome)
 
     def run_part_2(self):
-        return self._run(self.data_file, "part_2", "Part 2")
+        expected_outcome = self.mod.assertions["Part 2"] if self.has_assertion("Part 2") else None
+        return self._run(self.data_file, "part_2", "Part 2", expected_outcome)
 
     def run_all(self, run_steps: tuple):
+        def run_extra_tests(results: dict, part_name: str, step_name: str):
+            success = True
+            n = 2
+            for file_name, expected in self.mod.extra_tests[step_name]:
+                test_name = f"{step_name}.{n}"
+                result = self._run(self.test_file(file_name), part_name, test_name, expected)
+                results[test_name] = result
+                print(f"{test_name}:", results[test_name]["answer"], results[test_name]["message"])
+                if success:
+                    success = results[test_name]["success"]
+                n += 1
+            return success
+
         results = dict()
         keep_running = True
 
@@ -107,6 +130,8 @@ class Puzzle(object):
             results["Test 1"] = self.run_part_1_test()
             keep_running = results["Test 1"]["success"]
             print("Test 1:", results["Test 1"]["answer"], results["Test 1"]["message"])
+            if self.has_extra_tests("Test 1"):
+                keep_running = run_extra_tests(results, "part_1", "Test 1")
 
         if ("P1" in run_steps) and keep_running:
             results["Part 1"] = self.run_part_1()
@@ -117,6 +142,8 @@ class Puzzle(object):
             results["Test 2"] = self.run_part_2_test()
             keep_running = results["Test 2"]["success"]
             print("Test 2:", results["Test 2"]["answer"], results["Test 2"]["message"])
+            if self.has_extra_tests("Test 2"):
+                keep_running = run_extra_tests(results, "part_2", "Test 2")
 
         if ("P2" in run_steps) and keep_running:
             results["Part 2"] = self.run_part_2()
