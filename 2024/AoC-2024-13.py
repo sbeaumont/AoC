@@ -3,6 +3,8 @@
 """Solution for Advent of Code challenge 2024"""
 
 """
+My failed attempt at substitution...
+
 a*a0 + b*b0 = p0
 a = (p0 - b*b0) / a0
 
