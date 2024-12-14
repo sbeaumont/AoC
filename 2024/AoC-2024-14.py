@@ -52,30 +52,29 @@ def detect_region(locations, max_x, max_y, region_size):
     return bots_in_region
 
 
+def print_area(locations, max_x, max_y):
+    for y in range(max_y):
+        line = ['X' if (x, y) in locations else '.' for x in range(max_x)]
+        print(''.join(line))
+
+
 def part_1(entries: list):
     max_x, max_y, robots = entries
     seconds = 100
     locations = end_locations(robots, max_x, max_y, seconds)
     return score(locations, max_x, max_y)
 
-def print_area(locations, max_x, max_y):
-    for y in range(max_y):
-        line = ['X' if (x, y) in locations else '.' for x in range(max_x)]
-        print(''.join(line))
-
 def part_2(entries: list):
     max_x, max_y, robots = entries
-    seconds = 1
     elapsed_seconds = 0
-    max_seconds = 18000
-    for i in range(max_seconds):
-        robots = end_locations(robots, max_x, max_y, seconds, add_velocity=True)
-        locations = [(r[0], r[1]) for r in robots]
+    for i in range(8200):
+        robots = end_locations(robots, max_x, max_y, 1, add_velocity=True)
         elapsed_seconds += 1
+        locations = [(r[0], r[1]) for r in robots]
         if detect_region(locations, max_x, max_y, 20) > 200:
             # Maybe a tree?
-            print_area(locations, max_x, max_y)
-            print("Seconds", elapsed_seconds)
+            # print_area(locations, max_x, max_y)
+            # print("Seconds", elapsed_seconds)
             break
     return elapsed_seconds
 
@@ -92,7 +91,7 @@ def read_puzzle_data(data_file: str):
 
 assertions = {
     "Test 1": 12,
-    "Part 1": None,
+    "Part 1": 231852216,
     "Test 2": None,
-    "Part 2": None,
+    "Part 2": 8159,
 }
