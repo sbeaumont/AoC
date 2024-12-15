@@ -237,7 +237,7 @@ extra_tests = {
         ("AoC-2024-15-test-input-2.txt", 10092),
     ),
     "Test 2": (
-        ("AoC-2024-15-test-input-3.txt", None),
+        ("AoC-2024-15-test-input-3.txt", 618),
         ("AoC-2024-15-test-input-2.txt", 9021),
     )
  }
