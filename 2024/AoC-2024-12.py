@@ -5,7 +5,7 @@
 __author__ = "Serge Beaumont"
 __date__ = "December 2024"
 
-from aoc.utils.utils import neighbors4
+from aoc.utils import neighbors4
 
 
 class Farm(object):

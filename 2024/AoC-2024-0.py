@@ -1,6 +1,8 @@
-#!/usr/bin/env python3
+"""
+Solution for Advent of Code challenge 2024
 
-"""Solution for Advent of Code challenge 2024"""
+1.
+"""
 
 __author__ = "Serge Beaumont"
 __date__ = "December 2024"

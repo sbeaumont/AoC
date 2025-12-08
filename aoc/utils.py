@@ -52,7 +52,7 @@ def x(point): return point[0]
 def y(point): return point[1]
 
 
-def neighbors4(point, max_xy=None):
+def neighbors4(point):
     """The four neighbors (without diagonals)."""
     x, y = point
     return (x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)
@@ -118,7 +118,7 @@ def astar_search(start, h_func, move_func):
     while frontier:
         (f, s) = heappop(frontier)
         if h_func(s) == 0:
-            return Path(previous, s)
+            return path(previous, s)
         for s2 in move_func(s):
             new_cost = path_cost[s] + 1
             if s2 not in path_cost or new_cost < path_cost[s2]:
@@ -128,9 +128,9 @@ def astar_search(start, h_func, move_func):
     return dict(fail=True, front=len(frontier), prev=len(previous))
 
 
-def Path(previous, s):
+def path(previous, s):
     """Return a list of states that lead to state s, according to the previous dict."""
-    return [] if (s is None) else Path(previous, previous[s]) + [s]
+    return [] if (s is None) else path(previous, previous[s]) + [s]
 
 
 # ---------------------------------------------------------------------- My own stuff
