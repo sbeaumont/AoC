@@ -53,7 +53,7 @@ class Visualizer(object):
         self.draw = ImageDraw.Draw(self.im)
 
     def _scale_point(self, p: Point) -> Point:
-        return Point(p.x * self.scale, p.y * self.scale)
+        return Point(int(round(p.x * self.scale, 0)), int(round(p.y * self.scale, 0)))
 
     def _to_image_coords(self, point) -> Point:
         p = Point(*point)
